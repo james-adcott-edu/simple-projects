@@ -7,6 +7,12 @@ const appDiv = document.getElementById('app');
  * @property {string} detail - Optional detail of the todo item
  * @property {boolean} completed - The status of the todo item
  */
+function TodoItem(title) {
+    this.id = generateId();
+    this.title = title;
+    this.detail = '';
+    this.completed = false;
+}
 
 /**
  * @typeDef {Array<TodoItem>} todoList
@@ -34,25 +40,9 @@ const addTodo = function(todo) {
 const addTodoHandler = function() {
     const title = document.getElementById('todo-title').value.trim();
     if (!title) return;
-    addTodo(createTodoItem(title));
+    addTodo(new TodoItem(title));
     displayAllTodo();
     document.getElementById('todo-title').value = '';
-}
-
-/**
- * @typeDef {function} createTodoItem
- * @param {string} title - The title of the todo item
- * @param {string} detail - Optional detail of the todo item
- * @description Create a new todo item
- * @returns {TodoItem}
- */
-const createTodoItem = function(title, detail='') {
-    return {
-        id: generateId(),
-        title,
-        detail,
-        completed: false
-    }
 }
 
 /**
