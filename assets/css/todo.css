@@ -1,0 +1,12 @@
+.todo-item {
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+.todo-item [data-completed="true"] {
+    text-decoration: line-through;
+}
+
+.danger {
+    color: red;
+}

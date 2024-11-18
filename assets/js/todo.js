@@ -32,7 +32,8 @@ const addTodo = function(todo) {
  * @returns {void}
  */
 const addTodoHandler = function() {
-    const title = document.getElementById('todo-title').value;
+    const title = document.getElementById('todo-title').value.trim();
+    if (!title) return;
     addTodo(createTodoItem(title));
     displayAllTodo();
     document.getElementById('todo-title').value = '';
@@ -66,7 +67,7 @@ const createInputTodoHTML = function() {
         <input type="text" id="todo-title">
         <button id="add-todo" type="submit">Add</button></div>
         </form>
-        <p>${todoList.length} items in Todo List</p>
+        <p>${todoList.length} ${todoList.length===1 ? 'item':'items'} in Todo List</p>
         <hr>
     `;
 }
@@ -83,10 +84,8 @@ const displayAllTodo = function() {
         todoDiv.innerHTML = `
                 <p>
                     <input type="checkbox" ${todo.completed ? 'checked' : ''} onchange="setTodoCompletedHandler(${todo.id})">
-                    <span data-completed="${todo.completed}">${todo.title}</span>
+                    <span class="todo-item" data-completed="${todo.completed}" onclick="displayTodoDetail(${todo.id})">${todo.title}</span>
                 </p>
-                <button onclick="displayTodoDetail(${todo.id})">Detail</button>
-                <button onclick="removeTodoHandler(${todo.id})">Remove</button>
             `;
         appDiv.appendChild(todoDiv);
     });
@@ -103,9 +102,10 @@ const displayTodoDetail = function(id) {
     appDiv.innerHTML = `
         <button onclick="displayAllTodo()">Back</button>
         <div><input type="text" id="display-todo-title" value="${todo.title}"></div>
-        <div><textarea id="todo-detail">${todo.detail}</textarea></div>
+        <div><textarea placeholder="extra detail" id="todo-detail">${todo.detail}</textarea></div>
         <div><input id="todo-completed" type="checkbox" ${todo.completed ? 'checked' : ''}> Completed</div>
         <button onclick="modifyTodoHandler(${todo.id})">Save</button>
+        <button class="danger" onclick="removeTodoHandler(${todo.id})">Delete</button>
     `;
 }
 
@@ -170,7 +170,8 @@ const modifyTodo = function(id, title, detail, completed) {
  * @returns {void}
  */
 const modifyTodoHandler = function(id) {
-    let title = document.getElementById('display-todo-title').value;
+    let title = document.getElementById('display-todo-title').value.trim();
+    if (!title) return;
     let detail = document.getElementById('todo-detail').value;
     let completed = document.getElementById('todo-completed').checked;
     modifyTodo(id, title, detail, completed);
