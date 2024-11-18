@@ -67,7 +67,12 @@ const removeTodoHandler = function(id) {
  * @returns {number}
  */
 const generateId = function() {
-    return todoList.length + 1;
+    let maxId = window.localStorage.getItem('maxId');
+    if (!maxId) maxId = 0;
+    if (maxId < todoList.length) throw new Error('maxId is greater than todoList length');
+    maxId++;
+    window.localStorage.setItem('maxId', maxId);
+    return maxId;
 }
 
 /**
@@ -95,7 +100,7 @@ const createTodoItem = function(title, detail='') {
 const setTodoCompleted = function(id) {
     todoList = todoList.map(todo => {
         if (todo.id === id) {
-            todo.completed = true;
+            todo.completed = !todo.completed;
         }
         return todo;
     });
@@ -175,6 +180,8 @@ const createInputTodoHTML = function() {
     return `
         <div><input type="text" id="todo-title">
         <button id="add-todo" onclick="addTodoHandler()">Add</button></div>
+        <p>${todoList.length} items in Todo List</p>
+        <hr>
     `;
 }
 
@@ -185,7 +192,7 @@ const createInputTodoHTML = function() {
  */
 const displayAllTodo = function() {
     appDiv.innerHTML = createInputTodoHTML();
-    todoList.forEach(todo => {
+    todoList.slice().reverse().forEach(todo => {
         const todoDiv = document.createElement('div');
         todoDiv.innerHTML = `
                 <p data-completed="${todo.completed}">${todo.title}</p>
