@@ -3,7 +3,7 @@
     font-size: 1.2rem;
 }
 
-.todo-item [data-completed="true"] {
+*[data-completed="true"] {
     text-decoration: line-through;
 }
 
