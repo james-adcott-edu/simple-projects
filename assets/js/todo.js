@@ -79,7 +79,7 @@ const createInputTodoHTML = function() {
  */
 const displayAllTodo = function() {
     appDiv.innerHTML = createInputTodoHTML();
-    todoList.slice().reverse().forEach(todo => { // reverse the list to display the latest todo first
+    Array.from(todoList).reverse().forEach(todo => { // reverse the list to display the latest todo first
         const todoDiv = document.createElement('div');
         todoDiv.innerHTML = `
                 <p>
