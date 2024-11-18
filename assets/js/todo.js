@@ -62,24 +62,6 @@ const removeTodoHandler = function(id) {
 }
 
 /**
- * @typeDef {function} displayAllTodo
- * @description Display all todo in the list
- * @returns {void}
- */
-const displayAllTodo = function() {
-    appDiv.innerHTML = createInputTodoHTML();
-    todoList.forEach(todo => {
-        const todoDiv = document.createElement('div');
-        todoDiv.innerHTML = `
-                <p>${todo.title}</p>
-                <button onclick="displayTodoDetail(${todo.id})">Detail</button>
-                <button onclick="removeTodoHandler(${todo.id})">Remove</button>
-            `;
-        appDiv.appendChild(todoDiv);
-    });
-}
-
-/**
  * @typeDef {function} generateId
  * @description Generate an id for a new todo item
  * @returns {number}
@@ -172,6 +154,35 @@ const getFromLocalStorage = function() {
     }
 }
 
+/**
+ * @typeDef {function} createInputTodoHTML
+ * @description Create the input todo HTML
+ * @returns {string}
+ */
+const createInputTodoHTML = function() {
+    return `
+        <div><input type="text" id="todo-title">
+        <button id="add-todo" onclick="addTodoHandler()">Add</button></div>
+    `;
+}
+
+/**
+ * @typeDef {function} displayAllTodo
+ * @description Display all todo in the list
+ * @returns {void}
+ */
+const displayAllTodo = function() {
+    appDiv.innerHTML = createInputTodoHTML();
+    todoList.forEach(todo => {
+        const todoDiv = document.createElement('div');
+        todoDiv.innerHTML = `
+                <p>${todo.title}</p>
+                <button onclick="displayTodoDetail(${todo.id})">Detail</button>
+                <button onclick="removeTodoHandler(${todo.id})">Remove</button>
+            `;
+        appDiv.appendChild(todoDiv);
+    });
+}
 
 /**
  * @typeDef {function} displayTodoDetail
@@ -198,21 +209,5 @@ const init = function() {
     getFromLocalStorage();
     displayAllTodo();
 }
-
-const createInputTodoHTML = function() {
-    return `
-        <div><input type="text" id="todo-title">
-        <button id="add-todo" onclick="addTodoHandler()">Add</button></div>
-    `;
-}
-
-
-
-//document.getElementById('add-todo').addEventListener('click', function() {
-//    const title = document.getElementById('todo-title');
-//    addTodo(createTodoItem(title.value));
-//    displayAllTodo();
-//    title.value = '';
-//});
 
 init();
