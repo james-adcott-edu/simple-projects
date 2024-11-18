@@ -102,6 +102,18 @@ const setTodoCompleted = function(id) {
 }
 
 /**
+ * @typeDef {function} setTodoCompletedHandler
+ * @param {number} id - The id of the todo item to set as completed
+ * @description Set a todo item as completed
+ * @returns {void}
+ */
+const setTodoCompletedHandler = function(id) {
+    setTodoCompleted(id);
+    saveToLocalStorage();
+    displayAllTodo();
+}
+
+/**
  * @typeDef (function) modifyTodo
  * @param {number} id - The id of the todo item to modify
  * @param {string} title - The new title of the todo item
@@ -176,8 +188,9 @@ const displayAllTodo = function() {
     todoList.forEach(todo => {
         const todoDiv = document.createElement('div');
         todoDiv.innerHTML = `
-                <p>${todo.title}</p>
+                <p data-completed="${todo.completed}">${todo.title}</p>
                 <button onclick="displayTodoDetail(${todo.id})">Detail</button>
+                <button onclick="setTodoCompletedHandler(${todo.id})">Completed</button>
                 <button onclick="removeTodoHandler(${todo.id})">Remove</button>
             `;
         appDiv.appendChild(todoDiv);
@@ -196,6 +209,7 @@ const displayTodoDetail = function(id) {
         <div><input type="text" id="display-todo-title" value="${todo.title}"></div>
         <div><textarea id="todo-detail">${todo.detail}</textarea></div>
         <button onclick="modifyTodoHandler(${todo.id})">Save</button>
+        <button onclick="setTodoCompletedHandler(${todo.id})">Completed</button>
         <button onclick="displayAllTodo()">Back</button>
     `;
 }
