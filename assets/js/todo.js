@@ -126,11 +126,12 @@ const setTodoCompletedHandler = function(id) {
  * @description Modify a todo item
  * @returns {void}
  */
-const modifyTodo = function(id, title, detail) {
+const modifyTodo = function(id, title, detail, completed) {
     todoList = todoList.map(todo => {
         if (todo.id === id) {
             todo.title = title;
             todo.detail = detail;
+            todo.completed = completed;
         }
         return todo;
     });
@@ -145,7 +146,8 @@ const modifyTodo = function(id, title, detail) {
 const modifyTodoHandler = function(id) {
     let title = document.getElementById('display-todo-title').value;
     let detail = document.getElementById('todo-detail').value;
-    modifyTodo(id, title, detail);
+    let completed = document.getElementById('todo-completed').checked;
+    modifyTodo(id, title, detail, completed);
     saveToLocalStorage();
     displayAllTodo();
 }
@@ -195,9 +197,11 @@ const displayAllTodo = function() {
     todoList.slice().reverse().forEach(todo => {
         const todoDiv = document.createElement('div');
         todoDiv.innerHTML = `
-                <p data-completed="${todo.completed}">${todo.title}</p>
+                <p>
+                    <input type="checkbox" ${todo.completed ? 'checked' : ''} onchange="setTodoCompletedHandler(${todo.id})">
+                    <span data-completed="${todo.completed}">${todo.title}</span>
+                </p>
                 <button onclick="displayTodoDetail(${todo.id})">Detail</button>
-                <button onclick="setTodoCompletedHandler(${todo.id})">Completed</button>
                 <button onclick="removeTodoHandler(${todo.id})">Remove</button>
             `;
         appDiv.appendChild(todoDiv);
@@ -215,8 +219,8 @@ const displayTodoDetail = function(id) {
     appDiv.innerHTML = `
         <div><input type="text" id="display-todo-title" value="${todo.title}"></div>
         <div><textarea id="todo-detail">${todo.detail}</textarea></div>
+        <div><input id="todo-completed" type="checkbox" ${todo.completed ? 'checked' : ''}> Completed</div>
         <button onclick="modifyTodoHandler(${todo.id})">Save</button>
-        <button onclick="setTodoCompletedHandler(${todo.id})">Completed</button>
         <button onclick="displayAllTodo()">Back</button>
     `;
 }
