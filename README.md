@@ -5,7 +5,7 @@ This is me making some simple CRUD-y JavaScript applications. I am doing this to
 ## Projects
 
 - [x] To-Do List
-- [ ] Expense Tracker
+- [x] Expense Tracker
 - [ ] Notes App
 
 ## To-Do List
