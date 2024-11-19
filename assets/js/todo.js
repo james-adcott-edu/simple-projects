@@ -4,7 +4,7 @@ const appDiv = document.getElementById('app');
  * @typeDef {Object} TodoItem
  * @property {number} id - The id of the todo item
  * @property {string} title - The title of the todo item
- * @property {string} detail - Optional detail of the todo item
+ * @property {string} [detail] - Optional detail of the todo item
  * @property {boolean} completed - The status of the todo item
  */
 function TodoItem(title) {
@@ -136,7 +136,7 @@ const localStorageGet = function() {
 }
 
 /**
- * @typeDef (function) modifyTodo
+ * @typeDef {function} modifyTodo
  * @param {number} id - The id of the todo item to modify
  * @param {string} title - The new title of the todo item
  * @param {string} detail - The new detail of the todo item
