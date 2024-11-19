@@ -139,6 +139,7 @@ const localStorageGet = function() {
  * @param {number} id - The id of the todo item to modify
  * @param {string} title - The new title of the todo item
  * @param {string} detail - The new detail of the todo item
+ * @param {boolean} completed - The new status of the todo item
  * @description Modify a todo item
  * @returns {void}
  */
