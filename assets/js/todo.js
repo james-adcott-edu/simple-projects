@@ -53,10 +53,11 @@ const addTodoHandler = function() {
 const createInputTodoHTML = function() {
     return `
         <div>
-        <form onsubmit="addTodoHandler()">
-        <input type="text" id="todo-title">
-        <button id="add-todo" type="submit">Add</button></div>
-        </form>
+            <form onsubmit="addTodoHandler()">
+                <input type="text" id="todo-title">
+                <button id="add-todo" type="submit">Add</button>
+            </form>
+        </div>
         <p>${todoList.length} ${todoList.length===1 ? 'item':'items'} in Todo List</p>
         <hr>
     `;
