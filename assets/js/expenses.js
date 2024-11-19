@@ -53,15 +53,9 @@ const addExpenseHandler = (e) => {
 const displayAllExpenses = function() {
     appDiv.innerHTML = '';
     appDiv.appendChild(createExpenseFormHTML());
-    const totalUnpaid = expenseList.reduce((acc, expense) => {
-        if (expense.expenseStatus === 'unpaid') {
-            return acc + Number(expense.amount);
-        }
-        return acc;
-    }, 0);
-    appDiv.innerHTML += `
-        <p>Total Unpaid: ${totalUnpaid}</p>
-    `;
+    const totalUnpaidDiv = document.createElement('div');
+    totalUnpaidDiv.innerHTML = `Total Unpaid: ${totalUnpaid()}`;
+    appDiv.appendChild(totalUnpaidDiv);
     const expenseTable = document.createElement('table');
     const headerRow = document.createElement('tr');
     headerRow.innerHTML = `
@@ -83,6 +77,21 @@ const displayAllExpenses = function() {
         expenseTable.appendChild(expenseRow);
     });
     appDiv.appendChild(expenseTable);
+}
+
+
+/**
+ * @typeDef {function} totalUnpaid
+ * @description Calculate the total amount of unpaid expenses
+ * @returns {number}
+ */
+const totalUnpaid = function() {
+    return expenseList.reduce((acc, expense) => {
+        if (expense.expenseStatus === 'unpaid') {
+            return acc + Number(expense.amount);
+        }
+        return acc;
+    }, 0);
 }
 
 /**
