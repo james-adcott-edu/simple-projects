@@ -53,6 +53,15 @@ const addExpenseHandler = (e) => {
 const displayAllExpenses = function() {
     appDiv.innerHTML = '';
     appDiv.appendChild(createExpenseFormHTML());
+    const totalUnpaid = expenseList.reduce((acc, expense) => {
+        if (expense.expenseStatus === 'unpaid') {
+            return acc + Number(expense.amount);
+        }
+        return acc;
+    }, 0);
+    appDiv.innerHTML += `
+        <p>Total Unpaid: ${totalUnpaid}</p>
+    `;
     const expenseTable = document.createElement('table');
     const headerRow = document.createElement('tr');
     headerRow.innerHTML = `
